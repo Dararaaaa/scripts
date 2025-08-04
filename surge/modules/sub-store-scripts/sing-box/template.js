@@ -58,7 +58,7 @@ log(`共 ${proxies.length} 个节点, 其中 ${landingProxies.length} 个落地�
 // 确保存在落地 outbound
 let landingOutbound = config.outbounds.find(o => o.tag === '落地')
 if (!landingOutbound) {
-  landingOutbound = { tag: '落地', type: 'select', outbounds: [] }
+  landingOutbound = { tag: '落地', type: 'selector', outbounds: [] }
   config.outbounds.push(landingOutbound)
 }
 
