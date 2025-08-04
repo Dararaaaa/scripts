@@ -1,16 +1,6 @@
-// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=🕳ℹ️all|all-auto🕳ℹ️hk|hk-auto🏷ℹ️港|hk|hongkong|kong kong|🇭🇰🕳ℹ️tw|tw-auto🏷ℹ️台|tw|taiwan|🇹🇼🕳ℹ️jp|jp-auto🏷ℹ️日本|jp|japan|🇯🇵🕳ℹ️sg|sg-auto🏷ℹ️^(?!.*(?:us)).*(新|sg|singapore|🇸🇬)🕳ℹ️us|us-auto🏷ℹ️美|us|unitedstates|united states|🇺🇸
+// sing-box 订阅模板修改版
+// 功能: 节点含“落地”时只插入到“落地”outbound
 
-// 示例说明
-// 读取 名称为 "机场" 的 组合订阅 中的节点(单订阅不需要设置 type 参数)
-// 把 所有节点插入匹配 /all|all-auto/i 的 outbound 中(跟在 🕳 后面, ℹ️ 表示忽略大小写, 不筛选节点不需要给 🏷 )
-// 把匹配 /港|hk|hongkong|kong kong|🇭🇰/i  (跟在 🏷 后面, ℹ️ 表示忽略大小写) 的节点插入匹配 /hk|hk-auto/i 的 outbound 中
-// ...
-// 可选参数: includeUnsupportedProxy 包含官方/商店版不支持的协议 SSR. 用法: `&includeUnsupportedProxy=true`
-
-// 支持传入订阅 URL. 参数为 url. 记得 url 需要 encodeURIComponent.
-// 例如: http://a.com?token=123 应使用 url=http%3A%2F%2Fa.com%3Ftoken%3D123
-
-// ⚠️ 如果 outbounds 为空, 自动创建 COMPATIBLE(direct) 并插入 防止报错
 log(`🚀 开始`)
 
 let { type, name, outbound, includeUnsupportedProxy, url } = $arguments
@@ -60,6 +50,18 @@ if (url) {
   })
 }
 
+// === 新增逻辑: 分类落地节点 ===
+const landingProxies = proxies.filter(p => p.tag.includes('落地'))
+const normalProxies = proxies.filter(p => !p.tag.includes('落地'))
+log(`共 ${proxies.length} 个节点, 其中 ${landingProxies.length} 个落地节点`)
+
+// 确保存在落地 outbound
+let landingOutbound = config.outbounds.find(o => o.tag === '落地')
+if (!landingOutbound) {
+  landingOutbound = { tag: '落地', type: 'select', outbounds: [] }
+  config.outbounds.push(landingOutbound)
+}
+
 log(`③ outbound 规则解析`)
 const outbounds = outbound
   .split('🕳')
@@ -79,12 +81,17 @@ config.outbounds.map(outbound => {
       if (!Array.isArray(outbound.outbounds)) {
         outbound.outbounds = []
       }
-      const tags = getTags(proxies, tagRegex)
+      // 仅普通节点参与匹配
+      const tags = getTags(normalProxies, tagRegex)
       log(`🕳 ${outbound.tag} 匹配 ${outboundRegex}, 插入 ${tags.length} 个 🏷 匹配 ${tagRegex} 的节点`)
       outbound.outbounds.push(...tags)
     }
   })
 })
+
+// === 新增逻辑: 落地节点插入“落地” outbound ===
+log(`⑤ 插入落地节点到落地 outbound`)
+landingOutbound.outbounds.push(...landingProxies.map(p => p.tag))
 
 const compatible_outbound = {
   tag: 'COMPATIBLE',
@@ -92,7 +99,7 @@ const compatible_outbound = {
 }
 
 let compatible
-log(`⑤ 空 outbounds 检查`)
+log(`⑥ 空 outbounds 检查`)
 config.outbounds.map(outbound => {
   outbounds.map(([outboundPattern, tagRegex]) => {
     const outboundRegex = createOutboundRegExp(outboundPattern)
@@ -112,10 +119,12 @@ config.outbounds.map(outbound => {
   })
 })
 
+// === 保持原逻辑: 节点追加到 config.outbounds ===
 config.outbounds.push(...proxies)
 
 $content = JSON.stringify(config, null, 2)
 
+// === 工具函数 ===
 function getTags(proxies, regex) {
   return (regex ? proxies.filter(p => regex.test(p.tag)) : proxies).map(p => p.tag)
 }
@@ -130,3 +139,4 @@ function createOutboundRegExp(outboundPattern) {
 }
 
 log(`🔚 结束`)
+ 
