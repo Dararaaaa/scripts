@@ -100,7 +100,8 @@ const compatible_outbound = {
 
 let compatible
 if (landingOutbound.outbounds.length === 0) {
-  landingOutbound.outbounds.push(compatible_outbound)
+  config.outbounds.push(compatible_outbound)
+  landingOutbound.outbounds.push(compatible_outbound.tag)
   compatible = true
 }
 log(`⑥ 空 outbounds 检查`)
