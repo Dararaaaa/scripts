@@ -99,6 +99,10 @@ const compatible_outbound = {
 }
 
 let compatible
+if (landingOutbound.outbounds.length === 0) {
+  landingOutbound.outbounds.push(compatible_outbound)
+  compatible = true
+}
 log(`⑥ 空 outbounds 检查`)
 config.outbounds.map(outbound => {
   outbounds.map(([outboundPattern, tagRegex]) => {
