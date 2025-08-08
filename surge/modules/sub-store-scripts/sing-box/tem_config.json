@@ -19,595 +19,584 @@
       "external_ui_download_detour": "default"
     }
   },
-  "dns": {
-    "independent_cache": true,
-    "servers": [
-      {
-        "tag": "google",
-        "type": "udp",
-        "server": "8.8.8.8",
-        "detour": "default"
-      },
-      {
-        "tag": "ali",
-        "type": "udp",
-        "server": "223.5.5.5"
-      },
-      {
-        "tag": "fakeip",
-        "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
-      }
-    ],
-    "rules": [
-      {
-        "clash_mode": "Direct",
-        "server": "ali"
-      },
-      {
-        "clash_mode": "Global",
-        "server": "google"
-      },
-      {
-        "rule_set": "AWAvenue-Ads-Rule",
-        "action": "reject"
-      },
-      {
-        "rule_set": "geosite-cn",
-        "server": "ali"
-      },
-      {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "server": "fakeip"
-      }
-    ],
-    "final": "google",
-    "disable_cache": true,
-    "strategy": "ipv4_only"
-  },
-  "inbounds": [
+"dns": {
+  "independent_cache": true,
+  "servers": [
     {
-      "type": "tun",
-      "address": [
-        "172.18.0.1/30"
-      ],
-      "auto_route": true,
-      "strict_route": true
+      "tag": "ali",
+      "type": "https",
+      "server": "223.5.5.5"
+    },
+    {
+      "tag": "fakeip",
+      "type": "fakeip",
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
     }
   ],
-  "outbounds": [
+  "rules": [
     {
-      "tag": "default",
-      "type": "selector",
-      "outbounds": [
-        "落地",
-        "auto",
-        "select",
-        "select-2",
-        "select-3",
-        "hk",
-        "tw",
-        "jp",
-        "sg",
-        "us",
-        "other",
-        "direct"
-      ]
-    },
-    {
-      "tag": "auto",
-      "type": "urltest",
-      "outbounds": [
-        
-      ]
-    },
-    {
-      "tag": "select",
-      "type": "selector",
-      "outbounds": [
-        "auto"
-      ]
-    },
-    {
-      "tag": "select-2",
-      "type": "selector",
-      "outbounds": [
-        "auto"
-      ]
-    },
-    {
-      "tag": "select-3",
-      "type": "selector",
-      "outbounds": [
-        "auto"
-      ]
-    },
-    {
-      "tag": "Github",
-      "type": "selector",
-      "outbounds": [
-        "落地",
-        "auto",
-        "select",
-        "select-2",
-        "select-3",
-        "hk",
-        "tw",
-        "jp",
-        "sg",
-        "us",
-        "other",
-        "direct"
-      ]
-    },
-    {
-      "tag": "Microsoft",
-      "type": "selector",
-      "outbounds": [
-        "落地",
-        "auto",
-        "select",
-        "select-2",
-        "select-3",
-        "hk",
-        "tw",
-        "jp",
-        "sg",
-        "us",
-        "other",
-        "direct"
-      ]
-    },
-    {
-      "tag": "Bybit",
-      "type": "selector",
-      "outbounds": [
-        "落地",
-        "auto",
-        "select",
-        "select-2",
-        "select-3",
-        "hk",
-        "tw",
-        "jp",
-        "sg",
-        "us",
-        "other",
-        "direct"
-      ]
-    },
-    {
-      "tag": "Google",
-      "type": "selector",
-      "outbounds": [
-        "落地",
-        "auto",
-        "select",
-        "select-2",
-        "select-3",
-        "hk",
-        "tw",
-        "jp",
-        "sg",
-        "us",
-        "other",
-        "direct"
-      ]
-    },
-    {
-      "tag": "落地",
-      "type": "selector",
-      "outbounds": []
-    },
-    {
-      "tag": "ai",
-      "type": "selector",
-      "outbounds": [
-        "default",
-        "auto",
-        "select",
-        "select-2",
-        "select-3",
-        "hk",
-        "tw",
-        "jp",
-        "sg",
-        "us",
-        "other",
-        "direct"
-      ]
-    },
-    {
-      "tag": "hk",
-      "type": "urltest",
-      "outbounds": []
-    },
-    {
-      "tag": "tw",
-      "type": "urltest",
-      "outbounds": []
-    },
-    {
-      "tag": "jp",
-      "type": "urltest",
-      "outbounds": []
-    },
-    {
-      "tag": "sg",
-      "type": "urltest",
-      "outbounds": []
-    },
-    {
-      "tag": "us",
-      "type": "urltest",
-      "outbounds": []
-    },
-    {
-      "tag": "other",
-      "type": "urltest",
-      "outbounds": []
-    },
-    {
-      "tag": "direct",
-      "type": "direct"
-    }
-  ],
-  "route": {
-    "final": "default",
-    "default_domain_resolver": {
+      "clash_mode": "Direct",
       "server": "ali"
     },
-    "auto_detect_interface": true,
-    "rules": [
-      {
-        "action": "sniff"
-      },
-      {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "direct"
-      },
-      {
-        "protocol": "bittorrent",
-        "outbound": "direct"
-      },
-      {
-        "clash_mode": "Direct",
-        "outbound": "direct"
-      },
-      {
-        "clash_mode": "Global",
-        "outbound": "default"
-      },
-      {
-        "rule_set": [
-          "anti-ad",
-          "AWAvenue-Ads-Rule"
-        ],
-        "action": "reject"
-      },
-      {
-        "rule_set": [
-          "geosite-openai",
-          "geosite-anthropic",
-          "ai_non_ip"
-        ],
-        "outbound": "ai"
-      },
-      {
-        "rule_set": "custom",
-        "outbound": "us"
-      },
-      {
-        "rule_set": "rule_DIRECT",
-        "outbound": "direct"
-      },
-      {
-        "protocol": "quic",
-        "outbound": "reject"
-      },
-      {
-        "rule_set": [
-          "geosite-steam@cn",
-          "geosite-microsoft@cn",
-          "geosite-microsoft-pki@cn",
-          "geosite-microsoft-dev@cn"
-        ],
-        "outbound": "direct"
-      },
-      {
-        "rule_set": [
-          "bybit"
-        ],
-        "outbound": "Bybit"
-      },
-      {
-        "rule_set": [
-          "geosite-steam",
-          "geosite-pikpak"
-        ],
-        "outbound": "select-2"
-      },
-      {
-        "rule_set": "geosite-spotify",
-        "outbound": "select-3"
-      },
-      {
-        "rule_set": "geosite-github",
-        "outbound": "Github"
-      },
-      {
-        "rule_set": [
-          "geoip-google",
-          "geosite-google",
-          "geosite-youtube",
-          "geoip-telegram",
-          "geosite-telegram",
-          "geoip-twitter",
-          "geosite-twitter"
-        ],
-        "outbound": "Google"
-      },
-      {
-        "rule_set": [
-          "geosite-microsoft",
-          "geosite-microsoft-pki",
-          "geosite-microsoft-dev"
-        ],
-        "outbound": "Microsoft"
-      },
-      {
-        "rule_set": [
-          "geoip-cn",
-          "geosite-cn"
-        ],
-        "outbound": "direct"
-      }
+    {
+      "clash_mode": "Global",
+      "server": "fakeip"
+    },
+    {
+      "rule_set": "AWAvenue-Ads-Rule",
+      "action": "reject"
+    },
+    {
+      "rule_set": "geosite-cn",
+      "server": "ali"
+    },
+    {
+      "query_type": [
+        "A",
+        "AAAA"
+      ],
+      "server": "fakeip"
+    }
+  ]
+},
+"inbounds": [
+  {
+    "type": "tun",
+    "address": [
+      "172.18.0.1/30"
     ],
-    "rule_set": [
-      {
-        "tag": "AWAvenue-Ads-Rule",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-regex.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "ai_non_ip",
-        "type": "remote",
-        "format": "source",
-        "url": "https://ruleset.skk.moe/sing-box/non_ip/ai.json",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geoip-cn",
-        "type": "remote",
-        "format": "binary",
-        "download_detour": "default",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs"
-      },
-      {
-        "tag": "anti-ad",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://anti-ad.net/anti-ad-sing-box.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-github",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-github.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geoip-google",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-google.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-youtube",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-youtube.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-telegram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-telegram.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geoip-telegram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geoip-twitter",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-twitter.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-twitter",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-twitter.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-google",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-google.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-openai",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-openai.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-anthropic",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-anthropic.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-spotify",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-spotify.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-pikpak",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-pikpak.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-steam",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-steam.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-microsoft",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-microsoft@cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft@cn.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-microsoft-dev",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-dev.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-microsoft-dev@cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-dev@cn.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-microsoft-pki@cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-pki@cn.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-microsoft-pki",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-pki.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "geosite-steam@cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-steam@cn.srs",
-        "download_detour": "default"
-      },
-      {
-        "tag": "custom",
-        "type": "inline",
-        "rules": [
-          {
-            "domain": [
-              "sparkle.pbh-btn.com"
-            ]
-          }
-        ]
-      },
-      {
-        "tag": "bybit",
-        "type": "inline",
-        "rules": [
-          {
-            "domain_suffix": [
-              "bybit.com"
-            ]
-          }
-        ]
-      },
-      {
-        "tag": "rule_DIRECT",
-        "type": "inline",
-        "rules": [
-          {
-            "domain": [
-              "test.com",
-              "www.moefun.net",
-              "bbs.acgrip.com",
-              "game.maj-soul.com",
-              "gateway-cdn.maj-soul.com",
-              "gateway-hw.maj-soul.com",
-              "gateway-sy.catmjstudio.com",
-              "gateway-sy.maj-soul.com",
-              "gateway-v2.maj-soul.com",
-              "lb-cdn.maj-soul.com",
-              "lb-hw.maj-soul.com",
-              "lb-sy.maj-soul.com",
-              "lb-v2.maj-soul.com",
-              "majsoul-hk-client.cn-hongkong.log.aliyuncs.com",
-              "time.windows.com",
-              "yiandrive.com",
-              "dsz.yiandrive.com",
-              "sub2.985462.xyz",
-              "linux.do"
-            ],
-            "domain_keyword": [
-              "maj-soul",
-              "yiandrive"
-            ],
-            "domain_suffix": [
-              "cn"
-            ],
-            "domain_regex": [
-              "^stun\\..+"
-            ]
-          }
-        ]
-      }
-    ]
+    "auto_route": true,
+    "strict_route": true
   }
+],
+"outbounds": [
+  {
+    "tag": "default",
+    "type": "selector",
+    "outbounds": [
+      "落地",
+      "auto",
+      "select",
+      "select-2",
+      "select-3",
+      "hk",
+      "tw",
+      "jp",
+      "sg",
+      "us",
+      "other",
+      "direct"
+    ]
+  },
+  {
+    "tag": "auto",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "select",
+    "type": "selector",
+    "outbounds": [
+      "auto"
+    ]
+  },
+  {
+    "tag": "select-2",
+    "type": "selector",
+    "outbounds": [
+      "auto"
+    ]
+  },
+  {
+    "tag": "select-3",
+    "type": "selector",
+    "outbounds": [
+      "auto"
+    ]
+  },
+  {
+    "tag": "Github",
+    "type": "selector",
+    "outbounds": [
+      "落地",
+      "auto",
+      "select",
+      "select-2",
+      "select-3",
+      "hk",
+      "tw",
+      "jp",
+      "sg",
+      "us",
+      "other",
+      "direct"
+    ]
+  },
+  {
+    "tag": "Microsoft",
+    "type": "selector",
+    "outbounds": [
+      "落地",
+      "auto",
+      "select",
+      "select-2",
+      "select-3",
+      "hk",
+      "tw",
+      "jp",
+      "sg",
+      "us",
+      "other",
+      "direct"
+    ]
+  },
+  {
+    "tag": "Bybit",
+    "type": "selector",
+    "outbounds": [
+      "落地",
+      "auto",
+      "select",
+      "select-2",
+      "select-3",
+      "hk",
+      "tw",
+      "jp",
+      "sg",
+      "us",
+      "other",
+      "direct"
+    ]
+  },
+  {
+    "tag": "Google",
+    "type": "selector",
+    "outbounds": [
+      "落地",
+      "auto",
+      "select",
+      "select-2",
+      "select-3",
+      "hk",
+      "tw",
+      "jp",
+      "sg",
+      "us",
+      "other",
+      "direct"
+    ]
+  },
+  {
+    "tag": "落地",
+    "type": "selector",
+    "outbounds": []
+  },
+  {
+    "tag": "ai",
+    "type": "selector",
+    "outbounds": [
+      "default",
+      "auto",
+      "select",
+      "select-2",
+      "select-3",
+      "hk",
+      "tw",
+      "jp",
+      "sg",
+      "us",
+      "other",
+      "direct"
+    ]
+  },
+  {
+    "tag": "hk",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "tw",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "jp",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "sg",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "us",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "other",
+    "type": "urltest",
+    "outbounds": []
+  },
+  {
+    "tag": "direct",
+    "type": "direct"
+  }
+],
+"route": {
+  "final": "default",
+  "default_domain_resolver": {
+    "server": "ali"
+  },
+  "auto_detect_interface": true,
+  "rules": [
+    {
+      "action": "sniff"
+    },
+    {
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "ip_is_private": true,
+      "outbound": "direct"
+    },
+    {
+      "protocol": "bittorrent",
+      "outbound": "direct"
+    },
+    {
+      "clash_mode": "Direct",
+      "outbound": "direct"
+    },
+    {
+      "clash_mode": "Global",
+      "outbound": "default"
+    },
+    {
+      "rule_set": [
+        "anti-ad",
+        "AWAvenue-Ads-Rule"
+      ],
+      "action": "reject"
+    },
+    {
+      "rule_set": [
+        "geosite-openai",
+        "geosite-anthropic",
+        "ai_non_ip"
+      ],
+      "outbound": "ai"
+    },
+    {
+      "rule_set": "custom",
+      "outbound": "us"
+    },
+    {
+      "rule_set": "rule_DIRECT",
+      "outbound": "direct"
+    },
+    {
+      "protocol": "quic",
+      "outbound": "reject"
+    },
+    {
+      "rule_set": [
+        "geosite-steam@cn",
+        "geosite-microsoft@cn",
+        "geosite-microsoft-pki@cn",
+        "geosite-microsoft-dev@cn"
+      ],
+      "outbound": "direct"
+    },
+    {
+      "rule_set": [
+        "bybit"
+      ],
+      "outbound": "Bybit"
+    },
+    {
+      "rule_set": [
+        "geosite-steam",
+        "geosite-pikpak"
+      ],
+      "outbound": "select-2"
+    },
+    {
+      "rule_set": "geosite-spotify",
+      "outbound": "select-3"
+    },
+    {
+      "rule_set": "geosite-github",
+      "outbound": "Github"
+    },
+    {
+      "rule_set": [
+        "geoip-google",
+        "geosite-google",
+        "geosite-youtube",
+        "geoip-telegram",
+        "geosite-telegram",
+        "geoip-twitter",
+        "geosite-twitter"
+      ],
+      "outbound": "Google"
+    },
+    {
+      "rule_set": [
+        "geosite-microsoft",
+        "geosite-microsoft-pki",
+        "geosite-microsoft-dev"
+      ],
+      "outbound": "Microsoft"
+    },
+    {
+      "rule_set": [
+        "geoip-cn",
+        "geosite-cn"
+      ],
+      "outbound": "direct"
+    }
+  ],
+  "rule_set": [
+    {
+      "tag": "AWAvenue-Ads-Rule",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-regex.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "ai_non_ip",
+      "type": "remote",
+      "format": "source",
+      "url": "https://ruleset.skk.moe/sing-box/non_ip/ai.json",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-cn",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-cn.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geoip-cn",
+      "type": "remote",
+      "format": "binary",
+      "download_detour": "default",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-cn.srs"
+    },
+    {
+      "tag": "anti-ad",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://anti-ad.net/anti-ad-sing-box.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-github",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-github.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geoip-google",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-google.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-youtube",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-youtube.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-telegram",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-telegram.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geoip-telegram",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geoip-twitter",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-twitter.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-twitter",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-twitter.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-google",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-google.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-openai",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-openai.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-anthropic",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-anthropic.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-spotify",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-spotify.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-pikpak",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-pikpak.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-steam",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-steam.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-microsoft",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-microsoft@cn",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft@cn.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-microsoft-dev",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-dev.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-microsoft-dev@cn",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-dev@cn.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-microsoft-pki@cn",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-pki@cn.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-microsoft-pki",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-microsoft-pki.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "geosite-steam@cn",
+      "type": "remote",
+      "format": "binary",
+      "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-steam@cn.srs",
+      "download_detour": "default"
+    },
+    {
+      "tag": "custom",
+      "type": "inline",
+      "rules": [
+        {
+          "domain": [
+            "sparkle.pbh-btn.com"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "bybit",
+      "type": "inline",
+      "rules": [
+        {
+          "domain_suffix": [
+            "bybit.com"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "rule_DIRECT",
+      "type": "inline",
+      "rules": [
+        {
+          "domain": [
+            "test.com",
+            "www.moefun.net",
+            "bbs.acgrip.com",
+            "game.maj-soul.com",
+            "gateway-cdn.maj-soul.com",
+            "gateway-hw.maj-soul.com",
+            "gateway-sy.catmjstudio.com",
+            "gateway-sy.maj-soul.com",
+            "gateway-v2.maj-soul.com",
+            "lb-cdn.maj-soul.com",
+            "lb-hw.maj-soul.com",
+            "lb-sy.maj-soul.com",
+            "lb-v2.maj-soul.com",
+            "majsoul-hk-client.cn-hongkong.log.aliyuncs.com",
+            "time.windows.com",
+            "yiandrive.com",
+            "dsz.yiandrive.com",
+            "sub2.985462.xyz",
+            "linux.do"
+          ],
+          "domain_keyword": [
+            "maj-soul",
+            "yiandrive"
+          ],
+          "domain_suffix": [
+            "cn"
+          ],
+          "domain_regex": [
+            "^stun\\..+"
+          ]
+        }
+      ]
+    }
+  ]
+}
 }
