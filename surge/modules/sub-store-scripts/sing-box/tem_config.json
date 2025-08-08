@@ -246,7 +246,6 @@
   }
 ],
 "route": {
-  "final": "default",
   "default_domain_resolver": {
     "server": "ali"
   },
@@ -277,15 +276,12 @@
     },
     {
       "rule_set": [
-        "anti-ad",
-        "AWAvenue-Ads-Rule"
+        "anti-ad"
       ],
       "action": "reject"
     },
     {
       "rule_set": [
-        "geosite-openai",
-        "geosite-anthropic",
         "ai_non_ip"
       ],
       "outbound": "ai"
@@ -305,9 +301,7 @@
     {
       "rule_set": [
         "geosite-steam@cn",
-        "geosite-microsoft@cn",
-        "geosite-microsoft-pki@cn",
-        "geosite-microsoft-dev@cn"
+        "geosite-microsoft@cn"
       ],
       "outbound": "direct"
     },
@@ -346,9 +340,7 @@
     },
     {
       "rule_set": [
-        "geosite-microsoft",
-        "geosite-microsoft-pki",
-        "geosite-microsoft-dev"
+        "geosite-microsoft"
       ],
       "outbound": "Microsoft"
     },
